@@ -2,11 +2,11 @@
 
 set -euo pipefail
 
-OUTPUT_DIR="data/raw"
-OUTPUT_FILE="${OUTPUT_DIR}/dam_lmp_np15_2026-10-01.zip"
+OUTPUT_DIR="${OUTPUT_DIR:-data/raw}"
+OUTPUT_FILE="${OUTPUT_FILE:-${OUTPUT_DIR}/dam_lmp_np15_2026-10-01.zip}"
 TEMP_FILE="${OUTPUT_FILE}.part"
 
-URL="https://oasis.caiso.com/oasisapi/SingleZip?resultformat=6&queryname=PRC_LMP&startdatetime=20261001T07:00-0000&enddatetime=20261002T07:00-0000&version=1&market_run_id=DAM&node=TH_NP15_GEN-APND"
+URL="${URL:-https://oasis.caiso.com/oasisapi/SingleZip?resultformat=6&queryname=PRC_LMP&startdatetime=20261001T07:00-0000&enddatetime=20261002T07:00-0000&version=1&market_run_id=DAM&node=TH_NP15_GEN-APND}"
 
 mkdir -p "$OUTPUT_DIR"
 

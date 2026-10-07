@@ -16,7 +16,11 @@ if [[ -f "$OUTPUT_FILE" ]]; then
     exit 0
 fi
 
-rm -f "$TEMP_FILE"
+cleanup() {
+    rm -f "$TEMP_FILE"
+}
+
+trap cleanup EXIT
 
 curl \
     --fail \
@@ -25,6 +29,13 @@ curl \
     "$URL" \
     --output "$TEMP_FILE"
 
+if ! unzip -t "$TEMP_FILE" > /dev/null 2>&1; then
+    echo "ERROR: Downloaded artifact is not a valid ZIP archive." >&2
+    exit 1
+fi
+
 mv "$TEMP_FILE" "$OUTPUT_FILE"
 
-echo "Downloaded: $OUTPUT_FILE"
+trap - EXIT
+
+echo "Downloaded and validated: $OUTPUT_FILE"
